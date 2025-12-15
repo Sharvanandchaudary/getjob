@@ -1,278 +1,664 @@
-# Enterprise Job Application Tracking System
+# 🚀 Job Application Tracking System
 
-## 🎯 Overview
-A comprehensive real-time job application tracking platform with AI-powered job matching, automated reporting, and multi-role dashboards.
+[![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
+[![React](https://img.shields.io/badge/React-18-blue.svg)](https://reactjs.org/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green.svg)](https://www.mongodb.com/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-## 🏗️ System Architecture
+A comprehensive **enterprise-grade** job application tracking platform with **AI-powered job matching**, **real-time updates**, **automated reporting**, and **multi-role dashboards**.
 
-### Frontend
-- **React 18** with TypeScript
-- **Material-UI** for dashboard components
-- **Socket.io Client** for real-time updates
-- **React Query** for data fetching
-- **Recharts** for analytics visualization
+---
 
-### Backend
-- **Node.js + Express** REST API
-- **Socket.io** for WebSocket connections
-- **JWT** authentication with role-based access
-- **MongoDB** for flexible document storage
-- **Redis** for session management & caching
+## 📋 Table of Contents
 
-### AI & Automation
-- **OpenAI GPT-4** for resume analysis and job matching
-- **n8n** for workflow automation
-- **Node-cron** for scheduled tasks
-- **Nodemailer** for email reports
+- [Features](#-features)
+- [Demo](#-demo)
+- [Tech Stack](#-tech-stack)
+- [Quick Start](#-quick-start)
+- [Installation](#-installation)
+- [Configuration](#-configuration)
+- [Usage](#-usage)
+- [Deployment](#-deployment)
+- [API Documentation](#-api-documentation)
+- [Contributing](#-contributing)
 
-### Integrations
-- **Google Sheets API** for data sync
-- **GitHub Actions** for CI/CD
-- **Multiple Job Boards** scraping integration
+---
 
-## 👥 User Roles & Permissions
+## ✨ Features
 
-### 1. **Applicant/User**
-- View their applications and status
+### 🎯 Core Features
+- **Multi-Role Dashboard**: Separate interfaces for Users, Recruiters, and Admins
+- **Real-Time Updates**: WebSocket-powered live status changes and notifications
+- **AI Job Matching**: GPT-4 powered resume analysis and personalized job recommendations
+- **Application Tracking**: Comprehensive tracking through all stages (Applied → Screening → Interview → Offer)
+- **Email Automation**: Daily reports, status notifications, and weekly summaries
+- **Google Sheets Sync**: Bidirectional data synchronization for easy reporting
+
+### 👥 User Roles & Features
+
+#### 📱 **Job Seekers (Users)**
+- Create and track job applications
 - Upload resume for AI analysis
-- Get AI-recommended job matches
-- Track application progress
-- Receive daily email reports
+- Get personalized job recommendations with match scores
+- View application timeline and status history
+- Receive daily email summaries
 
-### 2. **Recruiter**
-- View assigned candidates
+#### 👔 **Recruiters**
+- View and manage assigned candidates
 - Update application statuses
-- Add notes and feedback
-- Track pipeline metrics
-- Receive daily assigned candidate reports
+- Schedule interviews with calendar integration
+- Add notes and feedback to applications
+- Track pipeline metrics and conversion rates
 
-### 3. **Admin**
-- Full system access
-- View all users, recruiters, applications
-- Analytics dashboard with charts
-- User management
-- System-wide reports
-- Google Sheets integration management
+#### 🔐 **Administrators**
+- Manage all users, recruiters, and applications
+- Assign candidates to recruiters
+- View system-wide analytics and success rates
+- Sync data to Google Sheets
+- Configure system settings
 
-## 🚀 Features
+---
 
-### Real-Time Synchronization
-- Live updates when recruiters change application status
-- Instant notifications for users on status changes
-- WebSocket-based bi-directional communication
-- Optimistic UI updates
+## 🎥 Demo
 
-### AI Job Matching Agent
-- Analyzes resume content using GPT-4
-- Extracts skills, experience, preferences
-- Searches multiple job boards (Indeed, LinkedIn, Glassdoor)
-- Returns curated list of job URLs with match scores
-- Automatic job recommendations
+### Demo Credentials
+```
+Admin:
+  Email: admin@getjob.com
+  Password: admin123
 
-### Automated Email Reports
-- **Daily 8 AM Report**: All users receive personalized updates
-- **Weekly Summary**: Application statistics and trends
-- **Instant Notifications**: Status changes, new assignments
-- **Admin Digest**: System-wide metrics
+Recruiter:
+  Email: recruiter1@getjob.com
+  Password: recruiter123
 
-### Google Sheets Integration
-- Auto-sync all data to Google Sheets
-- Real-time updates via n8n workflows
-- Backup and reporting
-- Accessible spreadsheet dashboard
-
-### n8n Workflows
-1. **Daily Report Workflow**: Generates and emails reports
-2. **Job Scraping Workflow**: Fetches new job listings
-3. **Sheet Sync Workflow**: Updates Google Sheets
-4. **Notification Workflow**: Sends real-time alerts
-
-## 📊 Data Models
-
-### User (Applicant)
-```javascript
-{
-  _id, email, password, role: 'user',
-  firstName, lastName, phone,
-  resume: { text, fileUrl, uploadedAt },
-  preferences: { jobTitles, locations, salary },
-  applications: [ApplicationId],
-  createdAt, updatedAt
-}
+User:
+  Email: user1@getjob.com
+  Password: user123
 ```
 
-### Recruiter
-```javascript
-{
-  _id, email, password, role: 'recruiter',
-  firstName, lastName, company,
-  assignedCandidates: [UserId],
-  createdAt, updatedAt
-}
-```
+### Screenshots
+![User Dashboard](docs/images/user-dashboard.png)
+![Recruiter Dashboard](docs/images/recruiter-dashboard.png)
+![Admin Dashboard](docs/images/admin-dashboard.png)
 
-### Admin
-```javascript
-{
-  _id, email, password, role: 'admin',
-  firstName, lastName,
-  permissions: ['all'],
-  createdAt, updatedAt
-}
-```
+---
 
-### Application
-```javascript
-{
-  _id, userId, jobId,
-  status: 'applied' | 'screening' | 'interview' | 'offer' | 'rejected',
-  assignedRecruiter: RecruiterId,
-  company, position, jobUrl,
-  appliedDate, lastUpdate,
-  notes: [{ author, text, createdAt }],
-  timeline: [{ status, timestamp, updatedBy }]
-}
-```
+## 🛠️ Tech Stack
 
-### Job
-```javascript
-{
-  _id, title, company, description,
-  location, salary, url,
-  source: 'manual' | 'ai-scraped',
-  matchScore: Number,
-  createdAt, expiresAt
-}
-```
+### **Frontend**
+- **React 18** - Modern UI library with hooks
+- **Material-UI (MUI)** - Professional UI components
+- **Zustand** - Lightweight state management
+- **React Router v6** - Client-side routing
+- **Socket.io Client** - Real-time WebSocket connections
+- **Axios** - HTTP client with interceptors
+- **Recharts** - Data visualization
 
-## 🔧 Setup Instructions
+### **Backend**
+- **Node.js 18+** - JavaScript runtime
+- **Express.js** - Web framework
+- **MongoDB Atlas** - Cloud NoSQL database
+- **Socket.io** - WebSocket server
+- **JWT** - Secure authentication
+- **Bcrypt** - Password hashing
+
+### **AI & Automation**
+- **OpenAI GPT-4** - Resume parsing and job matching
+- **Node-cron** - Scheduled tasks
+- **Nodemailer** - Email delivery
+- **n8n** - Workflow automation (optional)
+
+### **DevOps & Deployment**
+- **Docker** - Containerization
+- **GitHub Actions** - CI/CD pipeline
+- **Google Cloud Platform** - Cloud hosting (Cloud Run)
+- **Nginx** - Reverse proxy for frontend
+
+---
+
+## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js 18+
-- MongoDB 6+
-- Redis 7+
-- n8n instance
-- Google Cloud Project (for Sheets API)
-- OpenAI API key
+- **Node.js 18+** and **npm 9+**
+- **MongoDB Atlas** account (free tier available)
+- **Git** for version control
 
-### Environment Variables
+### 1. Clone the Repository
+```bash
+git clone https://github.com/Sharvanandchaudary/getjob.git
+cd getjob
+```
+
+### 2. Setup Backend
+```bash
+cd backend
+npm install
+
+# Create .env file
+cp .env.example .env
+# Edit .env with your MongoDB Atlas connection string
+```
+
+### 3. Setup Frontend
+```bash
+cd ../frontend
+npm install
+```
+
+### 4. Seed Database (Optional)
+```bash
+cd backend
+node scripts/seed.js
+# Creates demo users, applications, and jobs
+```
+
+### 5. Start Development Servers
+```bash
+# Terminal 1 - Backend (port 5000)
+cd backend
+npm run dev
+
+# Terminal 2 - Frontend (port 3000)
+cd frontend
+npm start
+```
+
+### 6. Open Application
+Navigate to `http://localhost:3000` and login with demo credentials above.
+
+---
+
+## 📦 Installation
+
+### Detailed Setup
+
+See **[INSTALLATION.md](INSTALLATION.md)** for comprehensive installation instructions.
+
+#### Quick Setup Commands
+
+```bash
+# 1. Clone repository
+git clone https://github.com/Sharvanandchaudary/getjob.git
+cd getjob
+
+# 2. Install backend dependencies
+cd backend
+npm install
+
+# 3. Configure environment
+cp .env.example .env
+# Edit .env with your MongoDB Atlas connection string
+
+# 4. Install frontend dependencies
+cd ../frontend
+npm install
+
+# 5. Seed database with demo data
+cd ../backend
+node scripts/seed.js
+
+# 6. Start development servers
+# Terminal 1 - Backend
+npm run dev
+
+# Terminal 2 - Frontend
+cd ../frontend
+npm start
+```
+
+---
+
+## ⚙️ Configuration
+
+### Backend Environment Variables (`backend/.env`)
+
 ```env
-# Server
+# Server Configuration
+NODE_ENV=development
 PORT=5000
-NODE_ENV=production
-JWT_SECRET=your-secret-key
 
-# Database
-MONGODB_URI=mongodb://localhost:27017/job-tracker
-REDIS_URL=redis://localhost:6379
+# Database (MongoDB Atlas)
+MONGODB_URI=mongodb+srv://appuser:password@cluster.mongodb.net/job-tracker?retryWrites=true&w=majority
 
-# OpenAI
-OPENAI_API_KEY=sk-...
+# Authentication
+JWT_SECRET=your-super-secret-jwt-key-minimum-32-characters
+JWT_EXPIRE=7d
 
-# Email
+# OpenAI API (for AI features)
+OPENAI_API_KEY=sk-proj-YOUR_API_KEY_HERE
+
+# Email Configuration (Gmail)
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_USER=your-email@gmail.com
-SMTP_PASS=your-app-password
+SMTP_PASS=your-16-char-gmail-app-password
 
-# Google Sheets
-GOOGLE_SHEETS_CLIENT_EMAIL=...
-GOOGLE_SHEETS_PRIVATE_KEY=...
-SPREADSHEET_ID=...
+# Frontend URL (for CORS)
+FRONTEND_URL=http://localhost:3000
 
-# n8n
-N8N_WEBHOOK_URL=https://your-n8n.com/webhook/...
+# Google Sheets (Optional)
+GOOGLE_SHEETS_CLIENT_EMAIL=your-service-account@project.iam.gserviceaccount.com
+GOOGLE_SHEETS_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
+GOOGLE_SHEETS_SPREADSHEET_ID=your-spreadsheet-id
 
-# Frontend
+# Redis (Optional - for caching)
+REDIS_URL=redis://localhost:6379
+```
+
+### Frontend Environment Variables (`frontend/.env`)
+
+```env
 REACT_APP_API_URL=http://localhost:5000
 REACT_APP_WS_URL=ws://localhost:5000
 ```
 
-### Installation
+---
 
-#### Backend
+## 💻 Usage
+
+### For Job Seekers
+
+1. **Register Account**: Sign up with email and password
+2. **Add Applications**: Track jobs you've applied to
+   - Company name
+   - Position title
+   - Application status
+   - Job URL
+   - Notes
+3. **Upload Resume**: Get AI-powered job recommendations
+4. **Track Progress**: Monitor application status in real-time
+5. **Receive Updates**: Daily email summaries and status notifications
+
+### For Recruiters
+
+1. **View Candidates**: See all assigned job seekers
+2. **Manage Applications**: Update status (Applied → Screening → Interview → Offer)
+3. **Schedule Interviews**: Set interview dates and times
+4. **Add Notes**: Document feedback and next steps
+5. **Track Metrics**: View pipeline statistics and conversion rates
+
+### For Administrators
+
+1. **Manage Users**: View, edit, delete users and recruiters
+2. **Assign Candidates**: Match job seekers with recruiters
+3. **View Analytics**: System-wide statistics and success rates
+4. **Sync Data**: Export to Google Sheets for reporting
+5. **Monitor System**: Track application trends and user activity
+
+---
+
+## 🚀 Deployment
+
+For complete deployment instructions, see **[DEPLOYMENT.md](DEPLOYMENT.md)**.
+
+### Quick Deploy to Google Cloud Platform
+
+```bash
+# 1. Install gcloud CLI and login
+gcloud auth login
+gcloud config set project job-tracker-prod
+
+# 2. Deploy backend
+cd backend
+gcloud run deploy job-tracker-backend \
+  --source . \
+  --platform managed \
+  --region us-central1 \
+  --allow-unauthenticated
+
+# 3. Deploy frontend
+cd ../frontend
+gcloud run deploy job-tracker-frontend \
+  --source . \
+  --platform managed \
+  --region us-central1 \
+  --allow-unauthenticated
+
+# 4. Setup cron jobs with Cloud Scheduler
+gcloud scheduler jobs create http daily-reports \
+  --schedule="0 8 * * *" \
+  --uri="https://YOUR-BACKEND-URL/api/cron/daily-reports"
+```
+
+### Deploy with Docker
+
+```bash
+# Build images
+docker build -t job-tracker-backend ./backend
+docker build -t job-tracker-frontend ./frontend
+
+# Run containers
+docker-compose up -d
+```
+
+---
+
+## 📚 API Documentation
+
+### Authentication Endpoints
+
+#### Register User
+```bash
+POST /api/auth/register
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "securePassword123",
+  "firstName": "John",
+  "lastName": "Doe",
+  "role": "user"
+}
+
+# Response: { token, user }
+```
+
+#### Login
+```bash
+POST /api/auth/login
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "securePassword123"
+}
+
+# Response: { token, user }
+```
+
+### Application Endpoints
+
+#### Get All Applications (User)
+```bash
+GET /api/applications
+Authorization: Bearer <token>
+
+# Response: [{ _id, company, position, status, appliedDate, ... }]
+```
+
+#### Create Application
+```bash
+POST /api/applications
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "company": "Google",
+  "position": "Software Engineer",
+  "status": "applied",
+  "appliedDate": "2025-01-15",
+  "jobUrl": "https://careers.google.com/jobs/123",
+  "notes": "Applied through referral"
+}
+
+# Response: { _id, company, position, ... }
+```
+
+#### Update Application
+```bash
+PATCH /api/applications/:id
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "status": "interview",
+  "notes": "Phone screen scheduled"
+}
+
+# Response: { _id, status, ... }
+```
+
+### Recruiter Endpoints
+
+#### Get Assigned Candidates
+```bash
+GET /api/recruiter/candidates
+Authorization: Bearer <token>
+
+# Response: [{ _id, firstName, lastName, email, applications: [...] }]
+```
+
+#### Update Application Status
+```bash
+PATCH /api/recruiter/application/:id
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "status": "interview",
+  "interviewDate": "2025-01-20T10:00:00Z",
+  "notes": "Technical interview scheduled"
+}
+
+# Response: { success, application }
+```
+
+### Admin Endpoints
+
+#### Get All Users
+```bash
+GET /api/admin/users
+Authorization: Bearer <admin-token>
+
+# Response: [{ _id, email, role, firstName, lastName, ... }]
+```
+
+#### Assign Candidate to Recruiter
+```bash
+POST /api/admin/assign-candidate
+Authorization: Bearer <admin-token>
+Content-Type: application/json
+
+{
+  "userId": "user-id-here",
+  "recruiterId": "recruiter-id-here"
+}
+
+# Response: { success, message }
+```
+
+#### Get Analytics
+```bash
+GET /api/admin/analytics
+Authorization: Bearer <admin-token>
+
+# Response: { 
+#   totalUsers, 
+#   totalApplications, 
+#   successRate, 
+#   applicationsByStatus: {...} 
+# }
+```
+
+### AI Endpoints
+
+#### Analyze Resume
+```bash
+POST /api/ai/analyze-resume
+Authorization: Bearer <token>
+Content-Type: multipart/form-data
+
+file: resume.pdf
+
+# Response: { 
+#   skills: [...], 
+#   experience: [...], 
+#   recommendations: [...] 
+# }
+```
+
+#### Get Job Matches
+```bash
+GET /api/ai/job-matches
+Authorization: Bearer <token>
+
+# Response: [{ 
+#   title, 
+#   company, 
+#   url, 
+#   matchScore, 
+#   skills: [...] 
+# }]
+```
+
+For complete API documentation, see **[QUICK_REFERENCE.md](QUICK_REFERENCE.md)**.
+
+---
+
+## 🏗️ Project Structure
+
+```
+job-application-tracker/
+├── backend/                  # Node.js/Express API
+│   ├── models/              # MongoDB schemas (User, Application, Job)
+│   ├── routes/              # API routes (auth, applications, recruiter, admin, ai)
+│   ├── middleware/          # Auth, error handling, rate limiting
+│   ├── services/            # Business logic (AI, email, sheets)
+│   ├── scripts/             # Utilities (seed, cron jobs)
+│   ├── config/              # Configuration files
+│   ├── server.js            # Express app setup
+│   ├── Dockerfile           # Backend container config
+│   └── package.json         # Backend dependencies
+│
+├── frontend/                 # React application
+│   ├── public/              # Static assets
+│   ├── src/
+│   │   ├── components/      # Reusable UI components (Navbar, PrivateRoute)
+│   │   ├── pages/           # Dashboard pages (Login, Register, User/Recruiter/Admin)
+│   │   ├── store/           # Zustand state management
+│   │   ├── api/             # API client with Axios
+│   │   ├── App.js           # Main app with routing
+│   │   └── index.js         # Entry point
+│   ├── Dockerfile           # Frontend container config
+│   ├── nginx.conf           # Nginx configuration
+│   └── package.json         # Frontend dependencies
+│
+├── docs/                     # Documentation
+│   ├── ARCHITECTURE.md      # System design
+│   ├── INSTALLATION.md      # Setup guide
+│   ├── DEPLOYMENT_GCP.md    # GCP deployment
+│   ├── SYSTEM_FLOWS.md      # Data flow diagrams
+│   └── QUICK_REFERENCE.md   # API quick reference
+│
+├── .github/
+│   └── workflows/
+│       └── ci.yml           # GitHub Actions CI/CD
+│
+├── README.md                # This file
+├── DEPLOYMENT.md            # Deployment guide
+├── docker-compose.yml       # Docker orchestration
+└── .gitignore              # Git ignore rules
+```
+
+---
+
+## 🧪 Testing
+
+### Run Backend Tests
 ```bash
 cd backend
-npm install
-npm run dev
+npm test
+
+# Run with coverage
+npm run test:coverage
 ```
 
-#### Frontend
+### Run Frontend Tests
 ```bash
 cd frontend
-npm install
-npm start
+npm test
+
+# Run in watch mode
+npm test -- --watch
 ```
 
-#### n8n
-```bash
-docker run -it --rm \
-  --name n8n \
-  -p 5678:5678 \
-  -v ~/.n8n:/home/node/.n8n \
-  n8nio/n8n
-```
+### Manual Testing Checklist
 
-## 📅 Automated Schedules
+- [ ] User registration and login
+- [ ] Create, read, update, delete applications
+- [ ] Upload resume and get AI analysis
+- [ ] Recruiter can view assigned candidates
+- [ ] Recruiter can update application status
+- [ ] Admin can manage users
+- [ ] Admin can assign candidates to recruiters
+- [ ] Real-time updates work between users
+- [ ] Email notifications are sent
+- [ ] Google Sheets sync works
 
-### Daily (8:00 AM)
-- Generate personalized reports for all users
-- Send email digests
-- Sync data to Google Sheets
-- Scrape new job listings
+---
 
-### Weekly (Monday 9:00 AM)
-- Comprehensive analytics report
-- Admin system health check
-- Data backup
+## 🤝 Contributing
 
-### Real-time
-- Application status updates
-- New application notifications
-- Job recommendations
+Contributions are welcome! Please follow these steps:
 
-## 🔐 Security Features
-- JWT token authentication
-- Password hashing with bcrypt
-- Role-based access control
-- Rate limiting on API endpoints
-- XSS protection
-- CORS configuration
-- Input validation and sanitization
+1. **Fork the repository**
+2. **Create a feature branch**: `git checkout -b feature/your-feature`
+3. **Commit changes**: `git commit -m 'Add some feature'`
+4. **Push to branch**: `git push origin feature/your-feature`
+5. **Open a Pull Request**
 
-## 📱 API Endpoints
+### Code Style
 
-### Authentication
-- `POST /api/auth/register` - Register new user
-- `POST /api/auth/login` - Login
-- `POST /api/auth/logout` - Logout
+- Follow ESLint configuration
+- Use Prettier for formatting
+- Write meaningful commit messages
+- Add comments for complex logic
+- Update documentation for new features
 
-### Applications (User)
-- `GET /api/applications` - Get user's applications
-- `POST /api/applications` - Create application
-- `GET /api/applications/:id` - Get application details
-- `PATCH /api/applications/:id` - Update application
+---
 
-### Recruiter
-- `GET /api/recruiter/candidates` - Get assigned candidates
-- `PATCH /api/recruiter/application/:id` - Update application status
-- `POST /api/recruiter/notes` - Add notes to application
+## 📄 License
 
-### Admin
-- `GET /api/admin/users` - Get all users
-- `GET /api/admin/recruiters` - Get all recruiters
-- `GET /api/admin/applications` - Get all applications
-- `GET /api/admin/analytics` - Get system analytics
-- `POST /api/admin/assign` - Assign candidate to recruiter
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
-### AI Agent
-- `POST /api/ai/analyze-resume` - Upload and analyze resume
-- `GET /api/ai/job-matches` - Get AI-matched jobs
-- `POST /api/ai/recommend` - Get personalized recommendations
+---
 
-## 🎨 Dashboard Views
+## 🙏 Acknowledgments
 
-### User Dashboard
+- **OpenAI** for GPT-4 API
+- **MongoDB Atlas** for cloud database
+- **Google Cloud Platform** for hosting
+- **Material-UI** for beautiful components
+- **Socket.io** for real-time capabilities
+
+---
+
+## 📞 Support & Contact
+
+- **GitHub Issues**: [Report bugs or request features](https://github.com/Sharvanandchaudary/getjob/issues)
+- **GitHub Discussions**: [Ask questions](https://github.com/Sharvanandchaudary/getjob/discussions)
+- **Email**: support@getjob.com
+
+---
+
+## 🗺️ Roadmap
+
+### Planned Features
+
+- [ ] **Mobile App** (React Native)
+- [ ] **Calendar Integration** (Google Calendar, Outlook)
+- [ ] **Interview Prep** (AI-generated questions based on job description)
+- [ ] **Salary Negotiation Tools** (Market data and suggestions)
+- [ ] **Chrome Extension** (Quick-add jobs from any website)
+- [ ] **Advanced Analytics** (Predictive success rates, time-to-offer estimates)
+- [ ] **Video Interview Integration** (Zoom, Google Meet scheduling)
+- [ ] **Document Management** (Cover letters, portfolios)
+- [ ] **Networking Tools** (LinkedIn integration, referral tracking)
+- [ ] **Multi-language Support** (i18n)
+
+---
+
+## 📊 System Status
+
+- **Backend Status**: [![Backend Status](https://img.shields.io/badge/status-operational-green.svg)](https://status.getjob.com)
+- **Database**: [![Database](https://img.shields.io/badge/MongoDB-operational-green.svg)](https://cloud.mongodb.com)
+- **AI Service**: [![OpenAI](https://img.shields.io/badge/OpenAI-operational-green.svg)](https://status.openai.com)
+
+---
+
+**Built with ❤️ by Sharvanand Chaudary**
+
+[⬆ Back to Top](#-job-application-tracking-system)
 - Application status cards
 - Timeline view of each application
 - AI job recommendations
